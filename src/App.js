@@ -68,9 +68,25 @@ class App extends React.Component {
     }
 
     drawIn() {
-     const  draw = SVG().addTo('.intercity').size(750, 500)
+      const draw = SVG().addTo('.intercity').size(1750, 1000)
+      const leftBorder = '-20 -20 0 0 -20, 20 v100 a20, 20 -20 0 0 20, '
+      const rightBorder = ' 20 0 0 1 20, 20 v100 a20,  20 0 0 1 -20,'
+      const line = (min = false) => `20 h${min ? '-' : ''}450 a20,`
+      const end = ' 0 v0 a20, 20 0 0 1 20,-20 z'
 
-      cd.map((map, i) => {
+
+      const path = draw.path('M0,'+line()
+          + rightBorder+ line(true)
+          + leftBorder+line()
+          + rightBorder+line(true)
+          + end)
+      path.fill('none').move(50, 30)
+      path.stroke({ color: 'rgba(194,18,53,0.68)', width: 10})
+
+
+
+
+    cd.map((map, i) => {
         if (i === 0) {
           draw.circle(40).fill('#c21235').move(40, 10)
           draw.circle(50).fill('none').move(35, 5)
@@ -108,8 +124,6 @@ class App extends React.Component {
               .fill('none').move(10, 170).rotate(180)
               .stroke({ color: 'rgba(194,18,53,0.68)', width: 10 })
         }
-
-
 
         if (cd.length === i) {
           draw.circle(40).fill('#c21235').move(40, (i % 3 * 120))
